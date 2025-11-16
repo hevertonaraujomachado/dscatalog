@@ -1,30 +1,44 @@
 package com.devsuperior.dscatalog.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
     private Double price;
+    private String imgUrl;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant date;
 
-    public Product(){
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    Set<Category> categories = new HashSet<>();
 
+    public Product() {
     }
 
-    public Product(Long id, String name, String description, Double price, Instant date) {
+    public Product(Long id, String name, String description, Double price, String imgUrl, Instant date) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.imgUrl = imgUrl;
         this.date = date;
     }
 
@@ -60,6 +74,14 @@ public class Product {
         this.price = price;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     public Instant getDate() {
         return date;
     }
@@ -68,16 +90,24 @@ public class Product {
         this.date = date;
     }
 
-    @Override
-    public final boolean equals(Object o) {
-        if (!(o instanceof Product product)) return false;
-
-        return Objects.equals(id, product.id);
+    public Set<Category> getCategories() {
+        return categories;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Product other = (Product) obj;
+        return Objects.equals(id, other.id);
     }
 }
-

@@ -2,6 +2,7 @@ package com.devsuperior.dscatalog.entities;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -13,9 +14,15 @@ public class Category {
     private Long id;
     private String name;
 
-    public Category() {
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
 
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
+
+    public Category() {
     }
+
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -37,15 +44,38 @@ public class Category {
         this.name = name;
     }
 
-    @Override
-    public final boolean equals(Object o) {
-        if (!(o instanceof Category category)) return false;
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
 
-        return Objects.equals(id, category.id);
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = Instant.now();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Category other = (Category) obj;
+        return Objects.equals(id, other.id);
     }
 }
