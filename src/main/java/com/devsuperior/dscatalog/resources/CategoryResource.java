@@ -1,5 +1,6 @@
 package com.devsuperior.dscatalog.resources;
 
+
 import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -19,8 +21,8 @@ public class CategoryResource {
     private CategoryService service;
 
     @GetMapping
-    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
-        Page<CategoryDTO> list = service.findAllPaged(pageable);
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+       List<CategoryDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
