@@ -22,7 +22,7 @@ public class ProductDTO {
     private List<CategoryDTO> categories = new ArrayList<>();
 
 
-    public ProductDTO() {
+    public ProductDTO(ProductDTO product, List<CategoryDTO> categories) {
 
     }
 
