@@ -9,26 +9,30 @@ import java.time.Instant;
 public class Factory {
 
     public static Product createProduct() {
-
-        Product product = new Product(null,
+        return new Product(
+                1L,
                 "Phone",
                 "Good Phone",
                 800.0,
                 "https://img.png",
-                Instant.parse("2020-07-20T03:00:00Z")); // data válida
-
-
-
-        return product;
+                Instant.parse("2020-07-20T03:00:00Z")
+        );
     }
 
-    public static Product createProductWithoutCategories() {
-        return createProduct(); // helper para deixar claro
+    public static Product createProductWithoutId() {
+        return new Product(
+                null,
+                "Phone",
+                "Good Phone",
+                800.0,
+                "https://img.png",
+                Instant.parse("2020-07-20T03:00:00Z")
+        );
     }
 
     public static ProductDTO createProductDTO() {
         Product product = createProduct();
         return new ProductDTO(product);
     }
-
 }
+
