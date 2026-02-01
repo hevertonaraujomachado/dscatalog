@@ -95,7 +95,7 @@ public class UserService {
 
 		entity.getRoles().clear();
 		for (RoleDTO roleDto : dto.getRoles()) {
-			Role role = roleRepository.getReferenceById(roleDto.getId()); // ✅
+			Role role = roleRepository.getOne(roleDto.getId()); // ✅
 			entity.getRoles().add(role);                                  // ✅
 		}
 	}
