@@ -1,14 +1,11 @@
 package com.devsuperior.dscatalog.util;
 
-import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.projections.IdProjection;
-import com.devsuperior.dscatalog.projections.ProductProjection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Utilis {
 
@@ -18,10 +15,12 @@ public class Utilis {
         for (IdProjection<ID> obj : unordered) {
             map.put(obj.getId(), obj);
         }
+
         List<IdProjection<ID>> result = new ArrayList<>();
         for (IdProjection<ID> obj : ordered) {
             result.add(map.get(obj.getId()));
         }
+
         return result;
     }
 }
